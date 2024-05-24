@@ -27,15 +27,15 @@ public class Application {
 
     public static final MessageDigest MD5;// 生成一个MD5加密计算摘要
 
-    public static final String URL_LAW_EXECUTEE = "/api/ht/getBePerformedInfo?v=1";
+    public static final String URL_LAW_EXECUTEE = "/api/ht/getBePerformedInfo?v=1";  //被执行人信息
 
-    public static final String URL_LAW_COURT_ANNOUNCEMENT = "/api/ht/getCourtAnnouncementInfo?v=1";
+    public static final String URL_LAW_COURT_ANNOUNCEMENT = "/api/ht/getCourtAnnouncementInfo?v=1";  //法院公告信息
 
-    public static final String URL_LAW_FINAL_CASE = "/api/ht/getFinalCaseInfo?v=1";
+    public static final String URL_LAW_FINAL_CASE = "/api/ht/getFinalCaseInfo?v=1";  //终审判决信息
 
-    public static final String URL_LAW_JUDGEMENT_DETAIL = "/api/ht/getExecuteJudgmentDetailInfo?v=1";
+    public static final String URL_LAW_JUDGEMENT_DETAIL = "/api/ht/getExecuteJudgmentDetailInfo?v=1";  //执行裁判文书信息详情
 
-    public static final String URL_LAW_JUDGEMENT_LIST = "/api/ht/getExecuteJudgmentInfo?v=1";
+    public static final String URL_LAW_JUDGEMENT_LIST = "/api/ht/getExecuteJudgmentInfo?v=1";  //执行裁判文书信息列表
 
 
     static {
@@ -49,10 +49,11 @@ public class Application {
 
     public static void main(String[] args) {
         Long timestamp = System.currentTimeMillis();
-        String ticket = "1ACB718B-0795-4101-B43D-9A5DC2178632";
-//        String ticket = Md5Utils.md5(timestamp.toString());
+//        String ticket = "1ACB718B-0795-4101-B43D-9A5DC2178632";
+        String ticket = java.util.UUID.randomUUID().toString().toUpperCase();
+        System.out.println(ticket);
         String requestBody = buildRequestBody("乐视网信息技术（北京）股份有限公司", ticket, timestamp);
-        String response = doPost(URL_PREFIX + URL_LAW_COURT_ANNOUNCEMENT, requestBody, "application/json;charset=UTF-8");
+        String response = doPost(URL_PREFIX + URL_LAW_EXECUTEE, requestBody, "application/json;charset=UTF-8");
         prettyPrint(response);
     }
 
