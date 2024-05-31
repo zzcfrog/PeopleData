@@ -37,6 +37,13 @@ public class Application {
 
     public static final String URL_LAW_JUDGEMENT_LIST = "/api/ht/getExecuteJudgmentInfo?v=1";  //执行裁判文书信息列表
 
+    public static final String URL_LAW_LITIGATION_LIST = "/api/litigation/ent/unioninfo?v=1";  //涉诉企业
+
+    public static final String URL_LAW_LITIGATION_DETAIL = "/api/litigation/person/unioninfo?v=1";  //涉诉个人
+
+
+
+
 
     static {
         try {
@@ -52,8 +59,13 @@ public class Application {
 //        String ticket = "1ACB718B-0795-4101-B43D-9A5DC2178632";
         String ticket = java.util.UUID.randomUUID().toString().toUpperCase();
         System.out.println(ticket);
-        String requestBody = buildRequestBody("乐视网信息技术（北京）股份有限公司", ticket, timestamp);
-        String response = doPost(URL_PREFIX + URL_LAW_EXECUTEE, requestBody, "application/json;charset=UTF-8");
+        Map<String, Object> params = new LinkedHashMap<>();
+//        params.put("entName", "乐视网信息技术（北京）股份有限公司");
+//        params.put("pageNo", 1);
+//        params.put("pageSize", 20);
+        params.put("name", "乐视网信息技术（北京）股份有限公司");
+        String requestBody = buildRequestBody(params, ticket, timestamp);
+        String response = doPost(URL_PREFIX + URL_LAW_LITIGATION_LIST, requestBody, "application/json;charset=UTF-8");
         prettyPrint(response);
     }
 
@@ -99,14 +111,12 @@ public class Application {
         }
     }
 
-    public static String buildRequestBody(String entName, String ticket, Long timestamp){
+
+    public static String buildRequestBody(Map<String, Object> params, String ticket, Long timestamp){
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("appKey", APP_KEY);
-        Map<String, Object> content = new LinkedHashMap<>();
-        content.put("entName", entName);
-        content.put("pageNo", 1);
-        content.put("pageSize", 20);
-        body.put("body", content);
+
+        body.put("body", params);
         body.put("sign", sign(ticket, timestamp));
         body.put("ticket", ticket);
         body.put("timestamp", timestamp);
